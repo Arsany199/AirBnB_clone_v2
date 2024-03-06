@@ -1,36 +1,40 @@
 #!/usr/bin/python3
-"""Fabric script based on the file 1-pack_web_static.py that distributes an
-archive to the web servers"""
-
+"""
+Distributes an archive to my web servers,
+using the function do_deploy
+"""
+from fabric.api import *
 from datetime import datetime
 import os
-from fabric.api import *
 
-env.host = ['52.201.211.116', '54.210.96.228']
-env.user = "ubuntu"
+env.hosts = ['54.144.136.64', '100.24.236.179']
+env.user = 'ubuntu'
 
 
 def do_pack():
-    """to make archive"""
-
-    local("sudo mkdir -p versions")
-    d = datetime.now()
-    archive = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-            d.year, d.month, d.day, d.hour, d.minute, d.second)
-    res = local("sudo tar -cvzf {} web_static".format(archive))
-    if res.failed:
+    '''
+    Generates a tgz archive from the
+    contents of the web_static folder
+    '''
+    try:
+        local('mkdir -p versions')
+        datetime_format = '%Y%m%d%H%M%S'
+        archive_path = 'versions/web_static_{}.tgz'.format(
+            datetime.now().strftime(datetime_format))
+        local('tar -cvzf {} web_static'.format(archive_path))
+        print('web_static packed: {} -> {}'.format(archive_path,
+              os.path.getsize(archive_path)))
+    except:
         return None
-    else:
-        return archive
 
 
 def do_deploy(archive_path):
     '''
     Deploy archive to web server
     '''
-    if not os.path.exists(archive):
+    if not os.path.exists(archive_path):
         return False
-    file_name = archive.split('/')[1]
+    file_name = archive_path.split('/')[1]
     file_path = '/data/web_static/releases/'
     releases_path = file_path + file_name[:-4]
     try:
