@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""fab script that generates a .tgz archive from the contents of the web_static"""
+"""fab script that generates a .tgz archive
+from the contents of the web_static"""
 
 from datetime import datetime
 import os
