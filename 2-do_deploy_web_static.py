@@ -28,9 +28,9 @@ def do_deploy(archive_path):
     '''
     Deploy archive to web server
     '''
-    if not os.path.exists(archive_path):
+    if not os.path.exists(archive):
         return False
-    file_name = archive_path.split('/')[1]
+    file_name = archive.split('/')[1]
     file_path = '/data/web_static/releases/'
     releases_path = file_path + file_name[:-4]
     try:
