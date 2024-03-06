@@ -2,7 +2,7 @@
 """fab script that generates a .tgz archive
 from the contents of the web_static"""
 
-from datetime import datetime
+import datetime
 import os
 from fabric.api import *
 
