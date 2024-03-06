@@ -25,23 +25,24 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """deploy archive to the server"""
-    if not os.path.exists(archive):
+    '''
+    Deploy archive to web server
+    '''
+    if not os.path.exists(archive_path):
         return False
-    f_name = archive.split('/')[1]
-    f_path = "/data/web_static/releases/"
-    rel_path = f_path + f_name[:-4]
+    file_name = archive_path.split('/')[1]
+    file_path = '/data/web_static/releases/'
+    releases_path = file_path + file_name[:-4]
     try:
-        put(archive, '/tmp/')
-        run('mkdir -p {}'.format(rel_path))
-        run('tar -xzf /tmp/{} -C {}'.format(f_name, rel_path))
-        run('rm /tmp/{}'.format(f_name))
-        run('mv {}/web_static/* {}/'.format(rel_path, rel_path))
-        run('rm -rf {}/web_static'.format(rel_path))
+        put(archive_path, '/tmp/')
+        run('mkdir -p {}'.format(releases_path))
+        run('tar -xzf /tmp/{} -C {}'.format(file_name, releases_path))
+        run('rm /tmp/{}'.format(file_name))
+        run('mv {}/web_static/* {}/'.format(releases_path, releases_path))
+        run('rm -rf {}/web_static'.format(releases_path))
         run('rm -rf /data/web_static/current')
-        run('ln -s {} /data/web_static/current'.format(rel_path))
+        run('ln -s {} /data/web_static/current'.format(releases_path))
         print('New version deployed!')
         return True
-    except Exception as e:
-        print(f"Exception occurred: {e}")
+    except:
         return False
