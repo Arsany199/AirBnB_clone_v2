@@ -38,9 +38,9 @@ def my_number(n):
 
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
-def number_template(n):
-    """return number template as html"""
-    return render_template("5-number.html", n=n)
+def var_num_template(n):
+        """function to display number in html page"""
+        return render_template("5-number.html", n=n)
 
 
 if __name__ == "__main__":
