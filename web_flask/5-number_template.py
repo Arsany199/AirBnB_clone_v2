@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-"""Sript that starts a Flask web app with 6 routes"""
+"""Sript that starts a Flask web app with 5 routes"""
 
 from flask import Flask
+from flask import render_template
 
 app = Flask(__name__)
 
@@ -38,10 +39,11 @@ def my_number(n):
 
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
-def var_num_template(n):
-    """function to display number in html page"""
-    return render_template("5-number.html", n=n)
+def html_number(n):
+    """display html if n is int"""
+    n = str(n)
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+        app.run(host="0.0.0.0", port=5000)
