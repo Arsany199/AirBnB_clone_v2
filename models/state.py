@@ -1,18 +1,14 @@
 #!/usr/bin/python3
 """This is the state class"""
 import os
-import models
+from models import storage
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """This is the class for State
-    Attributes:
-        name: input name
-        cities = relationship between state and city tables.
-    """
+    """This is the class for State"""
 
     __tablename__ = 'states'
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
